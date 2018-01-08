@@ -24,3 +24,5 @@ pip install conan==1.0.0b4
 pip install conan_package_tools
 
 conan user
+
+conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
