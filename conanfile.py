@@ -13,7 +13,7 @@ class LibharuConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
-    requires = "zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.32]@conan/stable"
+    requires = "zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.34]@bincrafters/stable"
 
     # Use statically linked zlib and libpng when itself is not shared"
     def requirements(self):

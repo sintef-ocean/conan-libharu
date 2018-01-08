@@ -2,9 +2,12 @@
 env:
    global:
      - CONAN_REFERENCE: "libharu/2.3.0"
-     - CONAN_USERNAME: "user"
-     - CONAN_LOGIN_USERNAME: "user"
-     - CONAN_CHANNEL: "channel"
+     - CONAN_USERNAME: "joakimono"
+     - CONAN_LOGIN_USERNAME: "joakimono"
+     - CONAN_CHANNEL: "testing"
+     - CONAN_UPLOAD: "https://api.bintray.com/conan/joakimono/conan"
+     - CONAN_STABLE_BRANCH_PATTERN: "release/*"
+     - CONAN_UPLOAD_ONLY_WHEN_STABLE: 0 # Set to 1 to only upload branches that match above pattern
      
 linux: &linux
    os: linux
