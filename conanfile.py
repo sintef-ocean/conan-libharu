@@ -22,12 +22,6 @@ class LibharuConan(ConanFile):
   
     def source(self):
 
-        if self.settings.os == "Linux":
-            self.run("sudo apt update")
-            self.run("sudo apt upgrade")
-            self.run("sudo apt install ca-certificates")
-            self.run("sudo update-ca-certificates")
-        
         self.run("git clone --depth 1 -b RELEASE_2_3_0 https://github.com/libharu/libharu.git")
         self.run("svn export https://github.com/libharu/libharu/trunk/LICENCE LICENSE")
 
