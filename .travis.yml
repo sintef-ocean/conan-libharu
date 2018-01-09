@@ -9,6 +9,7 @@ env:
      - CONAN_STABLE_BRANCH_PATTERN: "release/*"
      - CONAN_UPLOAD_ONLY_WHEN_STABLE: 0 # Set to 1 to only upload branches that match above pattern
      - CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan"
+     - CONAN_PIP_PACKAGE: svn
      
 linux: &linux
    os: linux
