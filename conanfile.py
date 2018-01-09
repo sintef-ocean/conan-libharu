@@ -1,4 +1,5 @@
 from conans import ConanFile, CMake, tools
+import svn.remote
 
 
 class LibharuConan(ConanFile):
@@ -23,8 +24,12 @@ class LibharuConan(ConanFile):
     def source(self):
 
         self.run("git clone --depth 1 -b RELEASE_2_3_0 https://github.com/libharu/libharu.git")
-        self.run("svn export https://github.com/libharu/libharu/trunk/LICENCE LICENSE")
-
+        #self.run("svn export https://github.com/libharu/libharu/trunk/LICENCE LICENSE")
+        
+        lic = svn.remote.RemoteClient("https://github.com/libharu/libharu/trunk")
+        lic_text = lic.cat("LICENCE")
+        tools.save("LICENSE", lic_text)
+        
         tools.replace_in_file("libharu/CMakeLists.txt", "project(libharu C)",
                               '''project(libharu C)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
