@@ -16,7 +16,6 @@ class LibharuConan(ConanFile):
     generators = "cmake"
     requires = "zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.34]@bincrafters/stable"
 
-    # Use statically linked zlib and libpng when itself is not shared"
     def requirements(self):
         self.options["zlib"].shared = self.options.shared
         self.options["libpng"].shared = self.options.shared
@@ -24,7 +23,6 @@ class LibharuConan(ConanFile):
     def source(self):
 
         self.run("git clone --depth 1 -b RELEASE_2_3_0 https://github.com/libharu/libharu.git")
-        #self.run("svn export https://github.com/libharu/libharu/trunk/LICENCE LICENSE")
         
         lic = svn.remote.RemoteClient("https://github.com/libharu/libharu/trunk")
         lic_text = lic.cat("LICENCE")

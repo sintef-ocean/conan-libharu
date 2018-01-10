@@ -1,5 +1,4 @@
-from conans import ConanFile, CMake
-import os
+from conans import ConanFile, CMake, tools
 
 class LibharuTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch", "os_build", "arch_build"
@@ -14,10 +13,14 @@ class LibharuTestConan(ConanFile):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
-        cmake.test()
+        if not tools.cross_building(self.settings):
+            cmake.test()
 
     def imports(self):
-        pass # should be resolved with linking
+        pass
 
     def test(self):
-        print("SUCCESS")
+        if not tools.cross_building(self.settings):
+            print("SUCCESS")
+        else:
+            print("NOT_RUN (cross-building)");
