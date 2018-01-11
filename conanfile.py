@@ -1,6 +1,4 @@
 from conans import ConanFile, CMake, tools
-import svn.remote
-
 
 class LibharuConan(ConanFile):
     name = "libharu"
