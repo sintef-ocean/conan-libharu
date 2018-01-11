@@ -15,6 +15,7 @@ class LibharuConan(ConanFile):
     default_options = "shared=False"
     generators = "cmake"
     requires = "zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.34]@bincrafters/stable"
+    exports = "lib_license/LICENSE"
 
     def requirements(self):
         self.options["zlib"].shared = self.options.shared
@@ -23,10 +24,6 @@ class LibharuConan(ConanFile):
     def source(self):
 
         self.run("git clone --depth 1 -b RELEASE_2_3_0 https://github.com/libharu/libharu.git")
-        
-        lic = svn.remote.RemoteClient("https://github.com/libharu/libharu/trunk")
-        lic_text = lic.cat("LICENCE")
-        tools.save("LICENSE", lic_text)
         
         tools.replace_in_file("libharu/CMakeLists.txt", "project(libharu C)",
                               '''project(libharu C)
@@ -46,7 +43,7 @@ conan_basic_setup()''')
         cmake.install()
 
     def package(self):
-        self.copy("LICENSE", dst="licenses", src=self.source_folder,
+        self.copy("lib_license/LICENSE", dst="licenses", src=self.source_folder,
                   ignore_case=True, keep_path=False)
 
     def package_info(self):
