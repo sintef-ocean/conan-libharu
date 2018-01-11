@@ -5,7 +5,7 @@ import svn.remote
 class LibharuConan(ConanFile):
     name = "libharu"
     version = "2.3.0"
-    license = "MIT"
+    license = "Zlib"
     url = "https://github.com/joakimono/conan-libharu"
     homepage = "http://libharu.org"
     author = "Joakim Haugen (joakim.haugen@gmail.com)"
