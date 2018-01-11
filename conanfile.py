@@ -32,6 +32,8 @@ conan_basic_setup()''')
                               "cmake_minimum_required(VERSION 3.1.2)")
         tools.replace_in_file("libharu/CMakeLists.txt",
                               "set(LIBHPDF_MINOR 2)", "set(LIBHPDF_MINOR 3)")
+        tools.replace_in_file("libharu/CMakeLists.txt", "set(CMAKE_MODULE_PATH", 
+                              "set(CMAKE_MODULE_PATH ${CONAN_LIBPNG_ROOT}")
 
     def build(self):
         cmake = CMake(self)

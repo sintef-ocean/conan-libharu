@@ -9,9 +9,10 @@ environment:
     CONAN_USERNAME: "joakimono"
     CONAN_LOGIN_USERNAME: "joakimono"
     CONAN_CHANNEL: "testing"
-    CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan"
     CONAN_UPLOAD: "https://api.bintray.com/conan/joakimono/conan"
-#    CONAN_PIP_PACKAGE: svn
+    CONAN_STABLE_BRANCH_PATTERN: "master/*"
+    CONAN_UPLOAD_ONLY_WHEN_STABLE: 1
+    CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan"
     
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
