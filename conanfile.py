@@ -37,8 +37,14 @@ conan_basic_setup()''')
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(source_folder="libharu",
-                        defs = {"LIBHPDF_SHARED": self.options.shared, "LIBHPDF_STATIC": not self.options.shared})
+
+        print("Shared option is: {}".format(self.options.shared))
+        if(self.options.shared):
+            cmake.configure(source_folder="libharu",
+                            defs = {"LIBHPDF_SHARED": "YES", "LIBHPDF_STATIC": "NO"})
+        else:
+            cmake.configure(source_folder="libharu",
+                            defs = {"LIBHPDF_SHARED": "NO", "LIBHPDF_STATIC": "YES"})            
         cmake.build()
         cmake.install()
 
