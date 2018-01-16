@@ -27,6 +27,14 @@ class LibharuConan(ConanFile):
                               '''project(libharu C)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()''')
+        tools.replace_in_file("libharu/CMakeLists.txt", "if(BUILD_SHARED_LIBS)",
+        '''if(BUILD_SHARED_LIBS)
+  set(LIBHPDF_SHARED ON)
+  set(LIBHPDF_STATIC NO)
+else()
+  set(LIBHPDF_SHARED NO)
+  set(LIBHPDF_STATIC ON)
+endif()''')
         tools.replace_in_file("libharu/CMakeLists.txt",
                               "cmake_minimum_required(VERSION 2.4.8 FATAL_ERROR)",
                               "cmake_minimum_required(VERSION 3.1.2)")
@@ -37,14 +45,7 @@ conan_basic_setup()''')
 
     def build(self):
         cmake = CMake(self)
-
-        print("Shared option is: {}".format(self.options.shared))
-        if(self.options.shared):
-            cmake.configure(source_folder="libharu",
-                            defs = {"LIBHPDF_SHARED": "YES", "LIBHPDF_STATIC": "NO"})
-        else:
-            cmake.configure(source_folder="libharu",
-                            defs = {"LIBHPDF_SHARED": "NO", "LIBHPDF_STATIC": "YES"})            
+        cmake.configure(source_folder="libharu")         
         cmake.build()
         cmake.install()
 
