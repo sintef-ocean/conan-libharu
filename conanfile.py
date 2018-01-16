@@ -10,7 +10,7 @@ class LibharuConan(ConanFile):
     description = "libHaru is a free, cross platform, open source library for generating PDF files."
     settings = "os", "compiler", "build_type", "arch", "os_build", "arch_build"
     options = {"shared": [True, False]}
-    default_options = "shared=False"
+    default_options = "shared=True"
     generators = "cmake"
     requires = "zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.34]@bincrafters/stable"
     exports = "lib_license/LICENSE"
