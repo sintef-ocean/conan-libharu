@@ -3,7 +3,7 @@ from conans import ConanFile, CMake, tools
 class LibharuConan(ConanFile):
     name = "libharu"
     version = "2.3.0"
-    license = "Zlib"
+    license = "zlib-acknowledgement"
     url = "https://github.com/joakimono/conan-libharu"
     homepage = "http://libharu.org"
     author = "Joakim Haugen (joakim.haugen@gmail.com)"
@@ -20,25 +20,23 @@ class LibharuConan(ConanFile):
         self.options["libpng"].shared = False
   
     def source(self):
-
         self.run("git clone --depth 1 -b RELEASE_2_3_0 https://github.com/libharu/libharu.git")
         
         tools.replace_in_file("libharu/CMakeLists.txt", "project(libharu C)",
                               '''project(libharu C)
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()''')
-        tools.replace_in_file("libharu/CMakeLists.txt", 
-                              "set(LIBHPDF_SHARED ON)",
-                              '''set(LIBHPDF_SHARED ON)
-  set(LIBHPDF_STATIC OFF)
-else(BUILD_SHARED_LIBS)
-  set(LIBHPDF_SHARED OFF)
-  set(LIBHPDF_STATIC ON)''')
+                              include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+                              conan_basic_setup()''')
         tools.replace_in_file("libharu/CMakeLists.txt",
                               "cmake_minimum_required(VERSION 2.4.8 FATAL_ERROR)",
                               '''cmake_minimum_required(VERSION 3.1.2)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-                              ''')
+                              set(CMAKE_POSITION_INDEPENDENT_CODE ON)''')
+        tools.replace_in_file("libharu/CMakeLists.txt", 
+                              "set(LIBHPDF_SHARED ON)",
+                              '''set(LIBHPDF_SHARED ON)
+                                set(LIBHPDF_STATIC OFF)
+                              else(BUILD_SHARED_LIBS)
+                                set(LIBHPDF_SHARED OFF)
+                                set(LIBHPDF_STATIC ON)''')
         tools.replace_in_file("libharu/CMakeLists.txt",
                               "set(LIBHPDF_MINOR 2)", "set(LIBHPDF_MINOR 3)")
         tools.replace_in_file("libharu/CMakeLists.txt", "set(CMAKE_MODULE_PATH", 

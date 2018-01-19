@@ -1,13 +1,8 @@
 from conans import ConanFile, CMake, tools
 
 class LibharuTestConan(ConanFile):
-    settings = "os", "compiler", "build_type", "arch", "os_build", "arch_build"
+    settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
-
-    def requirements(self):
-        self.options["libharu"].shared = self.options.shared
 
     def build(self):
         cmake = CMake(self)
