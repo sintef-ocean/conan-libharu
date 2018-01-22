@@ -70,7 +70,7 @@ class LibharuConan(ConanFile):
         if self.settings.compiler == "Visual Studio":
             if self.settings.build_type == "Debug":
                 self.cpp_info.libs[0] += 'd'
-            if self.settings.options.shared:
+            if self.options.shared:
                 self.cpp_info.defines = ["HPDF_DLL"] # mingw/cygwin also?
 
     def configure(self):
