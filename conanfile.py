@@ -6,7 +6,8 @@ from conans import ConanFile, CMake, tools
 class LibharuConan(ConanFile):
     name = "libharu"
     version = "2.3.0"
-    license = "zlib-acknowledgement"
+    license = "ZLIB"
+    #zlib-acknowledgement
     url = "https://github.com/joakimono/conan-libharu"
     homepage = "http://libharu.org"
     author = "Joakim Haugen (joakim.haugen@gmail.com)"
