@@ -14,25 +14,24 @@ class LibharuConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=True"
-    generators = "cmake"
+    generators = ("cmake_paths", "cmake_find_package")
     requires = ("zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.34]@bincrafters/stable")
-    exports = ["lib_license/LICENSE" , "FindLibharu.cmake"]
+    exports = ["lib_license/LICENSE", "Findlibharu.cmake"]
     source_subfolder = "libharu"
     build_subfolder = "build_subfolder"
-    
+
     def requirements(self):
         self.options["zlib"].shared = False
         self.options["libpng"].shared = False
-  
+
     def source(self):
         self.run("git clone --depth 1 -b RELEASE_2_3_0 https://github.com/libharu/libharu.git")
-        
+
         tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
                               "project(libharu C)",
-                              '''cmake_minimum_required(VERSION 3.1.2)
+                              '''cmake_minimum_required(VERSION 3.13)
                               project(libharu C)
-                              include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
-                              conan_basic_setup()''')
+                              include(${CMAKE_BINARY_DIR}/../conan_paths.cmake)''')
         tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
                               "cmake_minimum_required(VERSION 2.4.8 FATAL_ERROR)",
                               '''set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)''')
@@ -46,19 +45,19 @@ class LibharuConan(ConanFile):
         tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
                               "set(LIBHPDF_MINOR 2)", "set(LIBHPDF_MINOR 3)")
         tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
-                              "set(CMAKE_MODULE_PATH", 
+                              "set(CMAKE_MODULE_PATH",
                               "set(CMAKE_MODULE_PATH ${CONAN_LIBPNG_ROOT}")
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(source_folder=self.source_subfolder, build_folder=self.build_subfolder)         
+        cmake.configure(source_folder=self.source_subfolder, build_folder=self.build_subfolder)
         cmake.build()
         cmake.install()
 
     def package(self):
         self.copy("lib_license/LICENSE", dst="licenses", src=self.source_folder,
                   ignore_case=True, keep_path=False)
-        self.copy("FindLibharu.cmake", dst=".", src=self.source_folder, keep_path=False)
+        self.copy("Findlibharu.cmake", dst=".", src=self.source_folder, keep_path=False)
 
     def package_info(self):
         if self.settings.compiler == "Visual Studio":

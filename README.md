@@ -1,11 +1,11 @@
-[![Download](https://api.bintray.com/packages/joakimono/conan/libharu%3Ajoakimono/images/download.svg)](https://bintray.com/joakimono/conan/libharu%3Ajoakimono/_latestVersion)
-[![Build Status UNIX](https://travis-ci.org/joakimono/conan-libharu.png?branch=master)](https://travis-ci.org/joakimono/conan-libharu)
-[![Build Status WIND](https://ci.appveyor.com/api/projects/status/github/joakimono/conan-libharu?branch=master&svg=true)](https://ci.appveyor.com/project/joakimono/conan-libharu)
-
+[![GCC Conan](https://github.com/sintef-ocean/conan-libharu/workflows/GCC%20Conan/badge.svg)](https://github.com/sintef-ocean/conan-libharu/actions?query=workflow%3A"GCC+Conan")
+[![Clang Conan](https://github.com/sintef-ocean/conan-libharu/workflows/Clang%20Conan/badge.svg)](https://github.com/sintef-ocean/conan-libharu/actions?query=workflow%3A"Clang+Conan")
+[![MSVC Conan](https://github.com/sintef-ocean/conan-libharu/workflows/MSVC%20Conan/badge.svg)](https://github.com/sintef-ocean/conan-libharu/actions?query=workflow%3A"MSVC+Conan")
+[![Download](https://api.bintray.com/packages/sintef-ocean/conan/libharu%3Asintef/images/download.svg)](https://bintray.com/sintef-ocean/conan/libharu%3Asintef/_latestVersion)
 
 [Conan.io](https://conan.io) recipe for [libharu](http://libharu.org).
 
-The recipe generates library packages, which can be found at [Bintray](https://bintray.com/joakimono/conan/libharu%3Ajoakimono).
+The recipe generates library packages, which can be found at [Bintray](https://bintray.com/sintef-ocean/conan/libharu%3Asintef).
 The package is usually consumed using the `conan install` command or a *conanfile.txt*.
 
 ## How to use this package
@@ -13,7 +13,7 @@ The package is usually consumed using the `conan install` command or a *conanfil
 1. Add remote to conan's package [registry.txt](http://docs.conan.io/en/latest/reference/config_files/registry.txt.html):
 
    ```bash
-   $ conan remote add joakimono https://api.bintray.com/conan/joakimono/conan
+   $ conan remote add sintef https://api.bintray.com/conan/sintef-ocean/conan
    ```
 
 2. Using *conanfile.txt* in your project with *cmake*
@@ -22,7 +22,7 @@ The package is usually consumed using the `conan install` command or a *conanfil
 
    ```
    [requires]
-   libharu/[>=2.3.0]@joakimono/stable
+   libharu/[>=2.3.0]@sintef/stable
 
    [options]
    libharu:shared=False
@@ -31,31 +31,33 @@ The package is usually consumed using the `conan install` command or a *conanfil
    licenses, * -> ./licenses @ folder=True
 
    [generators]
-   cmake
+   cmake_paths
+   cmake_find_package
    ```
 
    Insert into your *CMakeLists.txt* something like the following lines:
    ```cmake
-   cmake_minimum_required(VERSION 3.1.2)
+   cmake_minimum_required(VERSION 3.13)
    project(TheProject CXX)
 
-   include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-   conan_basic_setup(TARGETS)
+   include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+   find_package(libharu MODULE REQUIRED)
 
    add_executable(the_executor code.cpp)
-   target_link_libraries(the_executor CONAN_PKG::libharu)
+   target_link_libraries(the_executor libharu::libharu)
    ```
    Then, do
    ```bash
    $ mkdir build && cd build
-   $ conan install ..
+   $ conan install .. -s build_type=<build_type>
    ```
+   where `<build_type>` is e.g. `Debug` or `Release`.
    You can now continue with the usual dance with cmake commands for configuration and compilation. For details on how to use conan, please consult [Conan.io docs](http://docs.conan.io/en/latest/)
 
 ## Package options
 
 Option | Default | Domain
----|---|--- 
+---|---|---
 shared|False|[True, False]
 
 ## Known recipe issues
