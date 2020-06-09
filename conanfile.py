@@ -16,7 +16,7 @@ class LibharuConan(ConanFile):
     default_options = "shared=True"
     generators = ("cmake_paths", "cmake_find_package")
     requires = ("zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.34]@bincrafters/stable")
-    exports = ["lib_license/LICENSE", "Findlibharu.cmake"]
+    exports = ["lib_license/LICENSE"]
     source_subfolder = "libharu"
     build_subfolder = "build_subfolder"
 
@@ -57,7 +57,6 @@ class LibharuConan(ConanFile):
     def package(self):
         self.copy("lib_license/LICENSE", dst="licenses", src=self.source_folder,
                   ignore_case=True, keep_path=False)
-        self.copy("Findlibharu.cmake", dst=".", src=self.source_folder, keep_path=False)
 
     def package_info(self):
         if self.settings.compiler == "Visual Studio":
