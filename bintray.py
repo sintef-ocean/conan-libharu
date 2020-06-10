@@ -23,14 +23,18 @@ def main(argvs):
 
     url = 'https://api.bintray.com/packages/sintef-ocean/conan/{}%3asintef'.format(
         pkg.name)
-    res = r.patch(url,
-                  auth=(args.username, args.password),
-                  data=json.dumps(info))
 
-    if not res.ok:
-        print("Could not set package info: {}".format(res.reason))
-    else:
-        print("Set package info: {}".format(res.reason))
+    try:
+        res = r.patch(url,
+                      auth=(args.username, args.password),
+                      data=json.dumps(info))
+
+        if not res.ok:
+            print("Could not set package info: {}".format(res.reason))
+        else:
+            print("Set package info: {}".format(res.reason))
+    except Exception:
+        print("WARNING failed to set package info")
 
     exit(0)
 
