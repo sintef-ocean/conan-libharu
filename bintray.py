@@ -2,7 +2,6 @@ import argparse
 import importlib
 import json
 import requests as r
-import sys
 
 parser = argparse.ArgumentParser(description='Set bintray info')
 parser.add_argument('conanlib', type=str, help='Name of conan class in conanfile.py')
@@ -29,12 +28,12 @@ def main(argvs):
                   data=json.dumps(info))
 
     if not res.ok:
-        print(res.reason)
-        exit(1)
+        print("Could not set package info: {}".format(res.reason))
     else:
         print("Set package info: {}".format(res.reason))
 
     exit(0)
+
 
 if __name__ == "__main__":
     import sys
