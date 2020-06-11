@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from conans import ConanFile, CMake, tools
+import os
 
 
 class LibharuTestConan(ConanFile):
@@ -21,7 +22,12 @@ class LibharuTestConan(ConanFile):
         self.copy('*.so*', dst='bin', src='lib')
 
     def test(self):
-        if not tools.cross_building(self.settings):
-            print("SUCCESS")
+        program = 'example'
+        if self.settings.os == "Windows":
+            program += '.exe'
+            test_path = os.path.join(self.build_folder,
+                                     str(self.settings.build_type))
         else:
-            print("NOT_RUN (cross-building)");
+            test_path = '.' + os.sep
+
+        self.run(os.path.join(test_path, program))
