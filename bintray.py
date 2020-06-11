@@ -4,9 +4,11 @@ import json
 import requests as r
 
 parser = argparse.ArgumentParser(description='Set bintray info')
-parser.add_argument('conanlib', type=str, help='Name of conan class in conanfile.py')
+parser.add_argument('conanlib', type=str,
+                    help='Name of conan class in conanfile.py')
 parser.add_argument('username', type=str, help='Bintray username')
 parser.add_argument('password', type=str, help='Bintray password')
+
 
 def main(argvs):
 
@@ -20,9 +22,10 @@ def main(argvs):
     info['licenses'] = [pkg.license]
     info['vcs_url'] = pkg.url
     info['website_url'] = pkg.homepage
+    info['labels'] = list(pkg.topics)
 
-    url = 'https://api.bintray.com/packages/sintef-ocean/conan/{}%3asintef'.format(
-        pkg.name)
+    url = 'https://api.bintray.com/packages/sintef-ocean/conan/{}%3asintef' \
+        .format(pkg.name)
 
     try:
         res = r.patch(url,

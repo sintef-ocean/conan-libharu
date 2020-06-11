@@ -3,20 +3,26 @@
 
 from conans import ConanFile, CMake, tools
 
+
 class LibharuConan(ConanFile):
     name = "libharu"
     version = "2.3.0"
     license = "ZLIB"
-    #zlib-acknowledgement
-    url = "https://github.com/joakimono/conan-libharu"
+    # zlib-acknowledgement
+    url = "https://github.com/sintef-ocean/conan-libharu"
     homepage = "http://libharu.org"
     author = "Joakim Haugen (joakim.haugen@gmail.com)"
-    description = "libHaru is a free, cross platform, open source library for generating PDF files."
+    description = \
+        "libHaru is a free, cross platform, open source library "\
+        "for generating PDF files."
+    topics = ("haru", "PDF", "Generator")
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=True"
     generators = ("cmake_paths", "cmake_find_package")
-    requires = ("zlib/[>=1.2.11]@conan/stable", "libpng/[>=1.6.34]@bincrafters/stable")
+    requires = (
+        "zlib/[>=1.2.11]@conan/stable",
+        "libpng/[>=1.6.34]@bincrafters/stable")
     exports = ["lib_license/LICENSE"]
     source_subfolder = "libharu"
     build_subfolder = "build_subfolder"
@@ -51,12 +57,14 @@ class LibharuConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(source_folder=self.source_subfolder, build_folder=self.build_subfolder)
+        cmake.configure(source_folder=self.source_subfolder,
+                        build_folder=self.build_subfolder)
         cmake.build()
         cmake.install()
 
     def package(self):
-        self.copy("lib_license/LICENSE", dst="licenses", src=self.source_folder,
+        self.copy("lib_license/LICENSE", dst="licenses",
+                  src=self.source_folder,
                   ignore_case=True, keep_path=False)
 
     def package_info(self):
@@ -70,7 +78,7 @@ class LibharuConan(ConanFile):
             if self.settings.build_type == "Debug":
                 self.cpp_info.libs[0] += 'd'
             if self.options.shared:
-                self.cpp_info.defines = ["HPDF_DLL"] # mingw/cygwin also?
+                self.cpp_info.defines = ["HPDF_DLL"]  # mingw/cygwin also?
 
     def configure(self):
         del self.settings.compiler.libcxx
