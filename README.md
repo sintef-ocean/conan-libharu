@@ -41,10 +41,10 @@ The package is usually consumed using the `conan install` command or a *conanfil
    project(TheProject CXX)
 
    include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
-   find_package(libharu MODULE REQUIRED)
+   find_package(Libharu MODULE REQUIRED)
 
    add_executable(the_executor code.cpp)
-   target_link_libraries(the_executor libharu::libharu)
+   target_link_libraries(the_executor Libharu::Libharu)
    ```
    Then, do
    ```bash

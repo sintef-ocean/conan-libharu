@@ -4,10 +4,10 @@ project(LibharuTest C)
 include(CTest)
 include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
-find_package(libharu MODULE REQUIRED)
+find_package(Libharu MODULE REQUIRED)
 
 add_executable(png-libharu test.c)
-target_link_libraries(png-libharu libharu::libharu)
+target_link_libraries(png-libharu Libharu::Libharu)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/basn3p04.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin)
 

@@ -68,6 +68,7 @@ class LibharuConan(ConanFile):
                   ignore_case=True, keep_path=False)
 
     def package_info(self):
+        self.cpp_info.name = "Libharu"
         if self.settings.compiler == "Visual Studio":
             self.cpp_info.libs = ['libhpdf']
         else:
