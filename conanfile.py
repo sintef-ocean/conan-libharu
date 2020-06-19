@@ -11,7 +11,7 @@ class LibharuConan(ConanFile):
     # zlib-acknowledgement
     url = "https://github.com/sintef-ocean/conan-libharu"
     homepage = "http://libharu.org"
-    author = "Joakim Haugen (joakim.haugen@gmail.com)"
+    author = "SINTEF Ocean"
     description = \
         "libHaru is a free, cross platform, open source library "\
         "for generating PDF files."
@@ -79,7 +79,7 @@ class LibharuConan(ConanFile):
             if self.settings.build_type == "Debug":
                 self.cpp_info.libs[0] += 'd'
             if self.options.shared:
-                self.cpp_info.defines = ["HPDF_DLL"]  # mingw/cygwin also?
+                self.cpp_info.defines = ["HPDF_DLL"]
 
     def configure(self):
         del self.settings.compiler.libcxx
