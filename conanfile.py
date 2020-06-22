@@ -34,24 +34,29 @@ class LibharuConan(ConanFile):
     def source(self):
         self.run("git clone --depth 1 -b RELEASE_2_3_0 https://github.com/libharu/libharu.git")
 
-        tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
+        tools.replace_in_file("{}/CMakeLists.txt"
+                              .format(self.source_subfolder),
                               "project(libharu C)",
                               '''cmake_minimum_required(VERSION 3.13)
                               project(libharu C)
                               include(${CMAKE_BINARY_DIR}/../conan_paths.cmake)''')
-        tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
+        tools.replace_in_file("{}/CMakeLists.txt"
+                              .format(self.source_subfolder),
                               "cmake_minimum_required(VERSION 2.4.8 FATAL_ERROR)",
                               '''set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)''')
-        tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
+        tools.replace_in_file("{}/CMakeLists.txt"
+                              .format(self.source_subfolder),
                               "set(LIBHPDF_SHARED ON)",
                               '''set(LIBHPDF_SHARED ON)
                                 set(LIBHPDF_STATIC OFF)
                               else(BUILD_SHARED_LIBS)
                                 set(LIBHPDF_SHARED OFF)
                                 set(LIBHPDF_STATIC ON)''')
-        tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
+        tools.replace_in_file("{}/CMakeLists.txt"
+                              .format(self.source_subfolder),
                               "set(LIBHPDF_MINOR 2)", "set(LIBHPDF_MINOR 3)")
-        tools.replace_in_file("{}/CMakeLists.txt".format(self.source_subfolder),
+        tools.replace_in_file("{}/CMakeLists.txt"
+                              .format(self.source_subfolder),
                               "set(CMAKE_MODULE_PATH",
                               "set(CMAKE_MODULE_PATH ${CONAN_LIBPNG_ROOT}")
 
