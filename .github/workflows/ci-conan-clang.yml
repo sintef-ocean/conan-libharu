@@ -17,30 +17,23 @@ jobs:
   conan-with-clang:
     name: Conan
     runs-on: ${{ matrix.os }}
-    env:
-      CC: clang-${{ matrix.compiler_version }}
-      CXX: clang++-${{ matrix.compiler_version }}
     strategy:
       fail-fast: false
       matrix:
         compiler_version: [8, 9, 10]
         build_type: [Debug, Release]
         option_shared: [shared=True, shared=False]
-        os: [ubuntu-18.04]
+        os: [ubuntu-20.04]
+    container:
+      image: conanio/clang${{ matrix.compiler_version }}
+      options: -u 0
     steps:
       - uses: actions/checkout@v2
       - name: Install prerequisites
         run: |
+          sudo apt-get update
           sudo pip3 install --upgrade setuptools pip
           sudo pip3 install conan requests
-          sudo pip3 install conan_package_tools
-          if [ ${{ matrix.compiler_version }} -eq 10 ]; then
-              wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-              echo deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main >> clang10.list
-              sudo mv clang10.list /etc/apt/sources.list.d/clang10.list
-              sudo apt-get update
-              sudo apt-get install clang-tools-10
-          fi
       - name: Configure Conan
         run: conan remote add sintef ${CONAN_UPLOAD} --insert 0
       - name: Conan create
@@ -55,4 +48,5 @@ jobs:
           conan upload --all -c -r sintef ${SINTEF_REFERENCE} --retry 5 --retry-wait 20 --force
       - name: Bintray info
         run: |
-          python3 bintray.py ${SINTEF_CONAN_CLASS} ${CONAN_LOGIN_USERNAME_SINTEF} ${CONAN_PASSWORD_SINTEF}
+          python3 bintray.py ${SINTEF_CONAN_CLASS} \
+            ${CONAN_LOGIN_USERNAME_SINTEF} ${CONAN_PASSWORD_SINTEF}
