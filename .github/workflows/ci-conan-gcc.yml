@@ -25,7 +25,7 @@ jobs:
         option_shared: [shared=True, shared=False]
         os: [ubuntu-20.04]
     container:
-      image: conanio/clang${{ matrix.compiler_version }}
+      image: conanio/gcc${{ matrix.compiler_version }}
       options: -u 0
     steps:
       - uses: actions/checkout@v2
